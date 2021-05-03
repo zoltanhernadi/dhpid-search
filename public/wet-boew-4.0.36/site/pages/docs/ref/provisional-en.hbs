@@ -1,0 +1,311 @@
+---
+{
+	"title": "Provisional features",
+	"language": "en",
+	"altLangPrefix": "provisional",
+	"dateModified": "2020-05-25",
+	"share": "true"
+}
+---
+
+<div class="alert alert-warning">
+	<h2>Unstable feature</h2>
+	<p>To be used at <strong>your own risk</strong>. All functionalities described below can be removed in any subsequent minor/major release</p>
+	<p><small><a href="https://wet-boew.github.io/wet-boew-documentation/decision/7.html">Learn more about the design decision around provisional features.</a></small></p>
+	<p>The documentation and/or working examples for those features could be incomplete or not available.</p>
+</div>
+
+<h2>Feature availability</h2>
+
+<p>The following table describes until which version of WET-BOEW each provisional feature will be available. The features' availability will be re-evaluated at every release. A withdrawn provisional feature would be notified one version in advance.</p>
+
+<details>
+	<summary>Status description</summary>
+	<dl class="dl-horizontal">
+		<dt>&lt;not specified&gt;</dt>
+		<dd>provisional</dd>
+		<dt>Withdrawn</dt>
+		<dd>The feature are not available</dd>
+		<dt>Supported</dt>
+		<dd>The feature are included and supported by the WET-BOEW public API.</dd>
+		<dt>Withdrawn after v.Major.Minor</dt>
+		<dd>The v.Major.Minor represent the last version where that feature is available. Authors must consider an alternative or remove that feature.</dd>
+	</dl>
+</details>
+
+<table class="table table-bordered">
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th class="nowrap">Available in</th>
+		<th>Status</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<th>CSS <code>.bg-cover</code></th>
+		<td>Background size cover</td>
+		<td>v4.0.34</td>
+		<td></td>
+	</tr>
+	<tr>
+		<th>Plugin <code>[data-bgimg]</code></th>
+		<td>Take the URL value and set it as the background image. To be replaced by CSS4 selector.</td>
+		<td>v4.0.34</td>
+		<td>Having <code>.provisional</code> class as a parent will be deprecated in July 2020 (approximately), which is 6 months after this feature was updated.</td>
+	</tr>
+	<tr>
+		<th>Plugin <code>[data-bgimg-srcset]</code></th>
+		<td>Detects the change in screen width and replace the background image accordingly</td>
+		<td>v4.0.34</td>
+		<td></td>
+	</tr>
+	<tr>
+		<th>Plugin <code>.wb-steps</code></th>
+		<td>Provides the ability to split a form into steps</td>
+		<td>v4.0.35</td>
+		<td><a href="../../docs/ref/stepsform/stepsform-en.html">Detailed documentation</a></td>
+	</tr>
+	<tr>
+		<th>Plugin <code>[data-wb-randomize]</code></th>
+		<td>This plugin randomly picks one of the child component to be shown on the browser</td>
+		<td>v4.0.35</td>
+		<td></td>
+	</tr>
+	<tr>
+		<th>Plugin <code>.wb-postback</code></th>
+		<td>This plugin makes an AJAX request when a form is submitted to stay on page</td>
+		<td>v4.0.35</td>
+		<td><a href="../../docs/ref/wb-postback/wb-postback-en.html">Detailed documentation</a></td>
+	</tr>
+</tbody>
+</table>
+
+<p>For more provisional features, check out the <a href="https://wet-boew.github.io/themes-dist/GCWeb/provisional-en.html">GCWeb theme's provisional features page</a>.</p>
+
+<h2>Provisional feature documentation</h2>
+
+<p>CSS provisional features must be accompanied by the class <code>.provisional</code> within his context of use.</p>
+
+
+<h2>Provisional working examples</h2>
+
+<h3 id="well-header-rwd-bgimg">Background image using [data-bgimg] plugin</h3>
+
+<div class="provisional bg-cover well" data-bgimg="../../demos/tabs/img/investinourfuture.jpg">
+	<div class="well mrgn-tp-md mrgn-bttm-md">
+		<h4 class="mrgn-tp-md">Heading</h4>
+		<p>Secondary title</p>
+	</div>
+</div>
+
+<details>
+	<summary>Source code</summary>
+	<pre><code>&lt;div class="provisional bg-cover well" data-bgimg="../../demos/tabs/img/investinourfuture.jpg"&gt;
+		&lt;div class="well mrgn-tp-md mrgn-bttm-md"&gt;
+			&lt;h4 class="mrgn-tp-md"&gt;Heading&lt;/h4&gt;
+			&lt;p&gt;Secondary title&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;</code></pre>
+</details>
+
+<h3 id="well-header-rwd-bgimg">Responsive background image using [data-bgimg-srcset] plugin</h3>
+<p>[data-bgimg-srcset] plugin is very similar to how <code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset">srcset</a></code> attribute works. This plugin is not to be used with [data-bgimg].</p>
+
+<pre><code>data-bgimg-srcset="image1_link 600w, image2_link 960w, image3_link 1280w"</code></pre>
+
+<p>Within the quotation marks, the configurations are separated by a comma and each configuration consists of a link to an image and a screen width (1000w = 1000px). That image will then be displayed at that specific width and down, unless it is the biggest image declared; if it is, then it will be shown at any width down to the next smaller configuration. Consequently, if a user's screen size is greater than any sizes listed in the attribute, it will automatically choose the one with the biggest configuration. Make sure to leave only one space between the link and the size.</p>
+
+<div class="provisional bg-cover well" data-bgimg-srcset="../../demos/tabs/img/investinourfuture.jpg 600w, ../../demos/tabs/img/flytheskies.jpg 960w, ../../demos/tabs/img/protect-environment.jpg 1280w">
+	<div class="well mrgn-tp-md mrgn-bttm-md">
+		<h4 class="mrgn-tp-md">Heading</h4>
+		<p>Secondary title</p>
+	</div>
+</div>
+
+<details>
+	<summary>Source code</summary>
+	<pre><code>&lt;div class="provisional bg-cover well"
+		data-bgimg-srcset="../../demos/tabs/img/investinourfuture.jpg 600w,
+				../../demos/tabs/img/flytheskies.jpg 960w,
+				../../demos/tabs/img/protect-environment.jpg 1280w"&gt;
+		&lt;div class="well mrgn-tp-md mrgn-bttm-md"&gt;
+			&lt;h4 class="mrgn-tp-md"&gt;Heading&lt;/h4&gt;
+			&lt;p&gt;Secondary title&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;</code></pre>
+</details>
+
+<h3>Showing random image using [data-wb-randomize] plugin</h3>
+<dl>
+	<dt><code>selector</code> (jQuery selector)</dt>
+	<dd>Default undefined. When undefined it selects all the children. This attribute specifies the child elements to be displayed.</dd>
+	<dt><code>shuffle</code> (boolean)</dt>
+	<dd>If true, it will shuffle the order of child components.</dd>
+	<dt><code>toggle</code> (CSS class)</dt>
+	<dd>Class name that will be toggled in child components and it will toggle the specified class of child components to reveal.</dd>
+	<dt><code>number</code> (number)</dt>
+	<dd>Optional and use with toggle. Number of child components to be displayed when toggled. Default is set to <code>1</code>.</dt>
+</dl>
+
+<h4>Show one random image</h4>
+<p>Below example shows one image out of three images randomly. Probability of 33% that a different image will be display on the next page refresh. The name of class that will be toggled is 'hide' in the following three <code>img</code>s.</p>
+<div class="provisional mrgn-bttm-md" data-wb-randomize='{ "shuffle": true, "selector": "img", "toggle": "hide" }'>
+	<img class="full-width hide" src="../../demos/tabs/img/investinourfuture.jpg" alt="Invest in our Future" />
+	<img class="full-width hide" src="../../demos/tabs/img/flytheskies.jpg" alt="Fly the Skies" />
+	<img class="full-width hide" src="../../demos/tabs/img/protect-environment.jpg" alt="Protect Environment" />
+</div>
+
+<details>
+	<summary>Source code</summary>
+	<pre><code>&lt;div <strong>class="provisional" data-wb-randomize='{ "shuffle": true, "selector": "img", "toggle": "hide" }'</strong>&gt;
+	&lt;img class="provisional-img-example hide"
+		src="../../demos/tabs/img/investinourfuture.jpg" alt="Invest in our Future" /&gt;
+	&lt;img class="provisional-img-example hide"
+		src="../../demos/tabs/img/flytheskies.jpg" alt="Fly the Skies" /&gt;
+	&lt;img class="provisional-img-example hide"
+		src="../../demos/tabs/img/protect-environment.jpg" alt="Protect Environment" /&gt;
+&lt;/div&gt;</code></pre>
+</details>
+
+<h4>Randomize tables rows</h4>
+<p>All five (5) table rows get shuffled on page load.</p>
+
+<table class="table table-bordered">
+	<caption>Data sample</caption>
+	<thead>
+		<tr>
+			<th>Column A</th>
+			<th>Column B</tgh>
+		</tr>
+	</thead>
+	<tbody class="provisional" data-wb-randomize='{ "shuffle": true }'>
+		<tr>
+			<td>Row 1, column A</td>
+			<td>Row 1, column B</td>
+		</tr>
+		<tr>
+			<td>Row 2, column A</td>
+			<td>Row 2, column B</td>
+		</tr>
+		<tr>
+			<td>Row 3, column A</td>
+			<td>Row 3, column B</td>
+		</tr>
+		<tr>
+			<td>Row 4, column A</td>
+			<td>Row 4, column B</td>
+		</tr>
+		<tr>
+			<td>Row 5, column A</td>
+			<td>Row 5, column B</td>
+		</tr>
+	</tbody>
+</table>
+
+<details>
+	<summary>Source code</summary>
+	<pre><code>&lt;table class=&quot;table table-bordered&quot;&gt;
+	&lt;caption&gt;Data sample&lt;/caption&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th&gt;Column A&lt;/th&gt;
+			&lt;th&gt;Column B&lt;/tgh&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody <strong>class=&quot;provisional&quot; data-wb-randomize='{ "shuffle": true }'</strong>&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 1, column A&lt;/td&gt;
+			&lt;td&gt;Row 1, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 2, column A&lt;/td&gt;
+			&lt;td&gt;Row 2, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 3, column A&lt;/td&gt;
+			&lt;td&gt;Row 3, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 4, column A&lt;/td&gt;
+			&lt;td&gt;Row 4, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 5, column A&lt;/td&gt;
+			&lt;td&gt;Row 5, column B&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+</details>
+
+
+<h4>Randomize tables rows and toggle 2 rows</h4>
+<p>All five (5) table rows get shuffled on page load and 2 of them get the CSS class <code>warning</code>.</p>
+
+<table class="table table-bordered">
+	<caption>Data sample</caption>
+	<thead>
+		<tr>
+			<th>Column A</th>
+			<th>Column B</tgh>
+		</tr>
+	</thead>
+	<tbody class="provisional" data-wb-randomize='{ "shuffle": true, "toggle": "warning", "number": 2 }'>
+		<tr>
+			<td>Row 1, column A</td>
+			<td>Row 1, column B</td>
+		</tr>
+		<tr>
+			<td>Row 2, column A</td>
+			<td>Row 2, column B</td>
+		</tr>
+		<tr>
+			<td>Row 3, column A</td>
+			<td>Row 3, column B</td>
+		</tr>
+		<tr>
+			<td>Row 4, column A</td>
+			<td>Row 4, column B</td>
+		</tr>
+		<tr>
+			<td>Row 5, column A</td>
+			<td>Row 5, column B</td>
+		</tr>
+	</tbody>
+</table>
+
+<details>
+	<summary>Source code</summary>
+	<pre><code>&lt;table class=&quot;table table-bordered&quot;&gt;
+	&lt;caption&gt;Data sample&lt;/caption&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th&gt;Column A&lt;/th&gt;
+			&lt;th&gt;Column B&lt;/tgh&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody <strong>class=&quot;provisional&quot; data-wb-randomize='{ "shuffle": true, "toggle": "warning", "number": 2 }'</strong>&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 1, column A&lt;/td&gt;
+			&lt;td&gt;Row 1, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 2, column A&lt;/td&gt;
+			&lt;td&gt;Row 2, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 3, column A&lt;/td&gt;
+			&lt;td&gt;Row 3, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 4, column A&lt;/td&gt;
+			&lt;td&gt;Row 4, column B&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Row 5, column A&lt;/td&gt;
+			&lt;td&gt;Row 5, column B&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+</details>
