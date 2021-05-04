@@ -13,6 +13,6 @@ class InspectionRegulation extends Model
 
     //one to many relationship method for regulations and deficiencies
     public function deficiencies() {
-        return $this->hasMany('App\Models\CTO\Deficiency', 'deficiencyID');
+        return $this->hasMany('App\Models\CTO\Deficiency', 'regulationID');
     }
 }

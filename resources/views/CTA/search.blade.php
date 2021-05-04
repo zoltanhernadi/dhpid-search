@@ -1,0 +1,194 @@
+@extends ('layouts.layout')
+@section('title')
+    <title>{{__("Clinical trial inspections")}}</title>
+@endsection
+@section('translate')
+    @if (Config::get('app.locale')=="en")
+        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+		    <h2 class="wb-inv">Language selection</h2>
+		    <ul class="list-inline mrgn-bttm-0">
+			    <li>
+				    <a id="langfr" lang="fr" hreflang="fr" href="{{route(Route::currentRouteName(), ['language'=>'fr'])}}">
+					    <span class="hidden-xs">Français</span>
+					     <abbr id="abfr" title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">Fr</abbr>
+				    </a>
+			    </li>
+		    </ul>
+	    </section>
+    @elseif (Config::get('app.locale')=="fr")
+        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+            <h2 class="wb-inv">Language selection</h2>
+            <ul class="list-inline mrgn-bttm-0">
+                <li>
+                    <a id="langen" lang="en" hreflang="en" href="{{route(Route::currentRouteName(), ['language'=>'en'])}}">
+                        <span class="hidden-xs">English</span>
+                        <abbr id="abfr" title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">En</abbr>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    @endif
+@endsection
+@section ('content')
+    <h1>{{__("Clinical trial inspections")}}</h1>
+    <p>{{__("Clinical trials in Canada for human drugs must meet high safety standards. Canada inspects clinical trials to reduce the risks to people participating in the trials.")}}</p>
+    <p>{{__("To learn more about the clinical trial inspections we conduct, you can visit ")}} <a href='{{__("https://www.canada.ca/en/health-canada/services/inspecting-monitoring-drug-health-products/drug-health-product-inspections/about-inspections-clinical-trials-human-drugs.html")}}'>{{__("about clinical trial inspections")}}</a> {{__("or browse these inspection results:")}}</p>
+    <ul>
+        <li><a href="{{ route('ctaresult', ['language' => app()->getLocale()]) }}">{{__("Clinical trial inspections search results")}}</a></li>
+        <li><a href="{{route('ctaresult', ['sponsorName'=>'','controlNumber'=>'','region'=>'','drug'=>'', 'rating'=>'NC','phase'=>'', 'startDate'=>'','endDate'=>'','language' => app()->getLocale()])}}">{{__("Non-compliant clinical trial inspections search results")}}</a></li>
+	</ul>
+	<p>{{__("You can also do your own search for clinical trial inspections. These results are updated regularly. Please note that the name of a drug could change over the course of a clinical trial.")}}</p>
+    <div id='topError'>
+        <section class='alert alert-danger'>
+            <div id='Title'>
+            </div>
+            <ul id="errorList"></ul>
+        </section>
+    </div>
+    @if (session('er')==true)
+        @php
+            $er=session('er');
+        @endphp
+        @if(isset($er['status']))
+            <section class="alert alert-danger">
+                <h5>{{__('Error')}}</h5>
+                {{__($er['status'])}}
+            </section>
+        @else
+            @foreach($er as $e)
+                <section class="alert alert-danger">
+                    <h5>{{__('Error')}}</h5>
+                    {{__($e)}}
+                </section>
+            @endforeach
+        @endif
+    @endif
+    <section class="panel panel-default">
+  		<header class="panel-heading">
+   			<h2 class="panel-title">{{__("Search")}}</h2>
+		</header>
+		<form action="{{ route('ctaresult', ['language' => app()->getLocale()]) }}" method="" role="form" class="form-horizontal" id="form"> 
+			<div class="panel-body">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="sponsorName">{{__("Sponsor name")}}:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="sponsorName" id="sponsorName" size="10" value="{{ old('sponsorName') }}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="controlNumber">{{__("Control number")}}:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="controlNumber" id="controlNumber" size="10" value="{{ old('controlNum') }}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="region">{{__("Region")}}:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="region" id="region">
+								<option label=" "></option>
+								<option value=1>Alberta</option>
+								<option value=2>{{__('Atlantic (New Brunswick, Nova Scotia, Prince Edward Island, Newfoundland and Labrador)')}}</option>
+								<option value=3>{{__('British Columbia')}}</option>
+								<option value=4>Ontario</option>
+								<option value=5>{{__('Manitoba and Saskatchewan')}}</option>
+								<option value=6>{{__('Quebec')}}</option>
+                            </select>
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-4 control-label" for="drug">{{__("Drug name")}}:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="drug" id="drug" size="10" value="{{ old('drug') }}">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-4 control-label" for="phase">{{__("Trial phase")}}:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="phase" id="phase">
+								<option label=" "></option>
+								<option value=1>Phase 1</option>
+								<option value=2>Phase 1/2</option>
+								<option value=3>Phase 2</option>
+								<option value=4>Phase 2/3</option>
+								<option value=5>Phase 3</option>
+								<option value=6>{{__('Other')}}</option>
+                            </select>
+						</div>
+					</div>
+					<div class="form-group">
+                        @if(isset($er['startDate']) && isset($er['site'])==false)
+                            <label class="col-sm-4 control-label" for="startDate">{{__("Inspection start date")}}:</label>
+						    <div class="col-md-8">
+							    <input class="form-control" type="date" name="startDate" id ="startDate" data-rule-dateiso="true" value="{{ old('startDate') }}">
+						    </div>
+                            <section class=" col-sm-4 alert alert-danger">
+                                <h5>{{__('Invalid Inspection Dates')}}</h5>
+                                {{__($er['startDate'])}}
+                            </section>
+                        @else
+                            <label class="col-sm-4 control-label" for="startDate">{{__("Inspection start date")}}:</label>
+						    <div class="col-md-8">
+							    <input class="form-control" type="date" name="startDate" id ="startDate" data-rule-dateiso="true" value="{{ old('startDate') }}">
+						    </div>
+                            <div id="startError"></div>
+                        @endif
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-4 control-label" for="rating">{{__("Rating")}}:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="rating" id="rating">
+								<option label=" "></option>
+								<option value="C">{{__('Compliant')}}</option>
+								<option value="NC">{{__('Non-Compliant')}}</option>
+								<option value="Inspection in progress">{{__('Inspection in progress')}}</option>
+							</select>
+						</div>
+					</div>
+				{{__("If you have further questions, please")}} <a href="mailto:hc.bpcp-pcpb.sc@canada.ca">{{__("email Biological Product Compliance Program")}}</a>
+			</div>
+			<footer class="panel-footer">
+						<div class="foot text-center">
+							<button type="submit" class="btn btn-primary">{{__("Submit")}}</button>
+							<button onClick="window.location.reload();" type="reset" class="btn btn-default">{{__("Reset")}}</button>
+						</div>
+			</footer>
+		</form>
+	</section>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+        $('#startDate').change(function(){
+            datesChecker();
+        });
+
+        window.onload=datesChecker();
+        function datesChecker(){
+            var now = new Date();
+            var sdate = new Date($('#startDate').val());
+            var count =0;
+            if(sdate>now){
+                $('#topError').show();
+                var html = "<section class='alert alert-danger'><h3>{{__('Error')}}</h3>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</section>";
+                var list = "<li id='1'>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</li>";
+                $('#startError').empty();
+                $('#startError').append(html);
+                $('#1').remove();
+                $('#errorList').append(list);
+                $('#form').attr('onsubmit','return false;');
+                count++;
+            }
+            if(count==0){
+                $('#topError').hide();
+                $('#startError').empty();
+                $('#errorList').empty();
+                $('#form').attr('onsubmit','return true;');
+            }
+            else if(count==1){
+                $('#Title').empty();
+                $('#Title').append("<h2 id='errorTitle'>{{__('The form could not be submitted because ')}}"+count+"{{__(' error was found')}}</h2>");            }
+            else{
+                $('#Title').empty();
+                $('#Title').append("<h2 id='errorTitle'>{{__('The form could not be submitted because ')}}"+count+"{{__(' errors were found.')}}");
+            } 
+        }
+	</script>
+@endsection

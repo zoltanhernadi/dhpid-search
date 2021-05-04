@@ -3,6 +3,7 @@
 namespace App\Models\AHR;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DHPIDRegulationModel;
 
 class Deficiency extends DHPIDRegulationModel {
     protected $table = "deficiencies";

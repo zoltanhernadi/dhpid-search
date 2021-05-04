@@ -35,3 +35,14 @@ Route::group(['prefix' => 'cto'], function(){
         Route::get('/reportcard', 'CTO\ReportCardController@reportcard')->name('ctoreportcard');
     });
 });
+
+Route::redirect('/gcp', '/gcp/en/search');
+Route::group(['prefix' => 'gcp'], function(){
+    Route::group(['prefix' =>'{language}'], function(){
+        Route::view('/search', 'CTA.search')->name('ctasearch');
+        Route::get('/result', 'CTA\ResultController@receive')->name('ctaresult');
+        Route::get('/sponsor', 'CTA\SponsorController@sponsorPage')->name('ctasponsor');
+        Route::get('/deficiencies', 'CTA\InitialDeficienciesController@deficiencies')->name('ctadeficiencies');
+        Route::get('/reportcard', 'CTA\ReportCardController@reportcard')->name('ctareportcard');
+    });
+});
