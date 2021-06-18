@@ -52,12 +52,10 @@ pipeline {
                     usernamePassword(credentialsId:'ARTIFACTORY_PUBLISH', usernameVariable: 'USR', passwordVariable: 'PWD')
                 ]) {
                     sh """
-                        ./container.sh
-
                         docker login -u ${USR} -p ${PWD} ${
                         containerRegistry
                     }
-                        docker build -t dhpid-search:${version} -t dhpid-search:${version} ./docker/
+			docker build -t dhpid-search:${version} . -f ./docker/Dockerfile
                         docker tag dhpid-search:${version} ${containerRegistry}/dhpid-search:${version}
                     """
                 }
@@ -103,17 +101,9 @@ pipeline {
                 label 'dhpid2-dv-wb-01'
             }
             steps {
-/*
                 sh """
-                    cd ./terraform
-                    terraform init
-                    terraform plan -out terra.pln \
-                        -var="build-version=${version}"
-
-                    terraform apply -auto-approve terra.pln
+		    ./container.sh
                 """
-*/
-// ???
             }
         }
     }
