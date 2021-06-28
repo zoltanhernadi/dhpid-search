@@ -26,9 +26,11 @@ docker rm ${DOCKERSEARCH} || true
 docker create --name ${DOCKERSEARCH} \
     -p 8000:80 \
     -e WEBROOT=/var/www/dhpid-search/public \
+    --env-file ${HOME}/secrets/search_secrets.sh \
     --add-host cr2.canadacentral1-a.control.database.windows.net:10.180.29.6 \
     --restart always \
-    ${DOCKERSEARCHIMAGE}
+    ${DOCKERSEARCHIMAGE} \
+    /install.sh
 
 docker network connect appnet ${DOCKERSEARCH}
 

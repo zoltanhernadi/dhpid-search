@@ -1,13 +1,21 @@
-SECRETS_FILE="$1"
+#!/bin/bash
+
 LARAVEL_ROOT="/var/www/dhpid-search"
 ENV_FILE="${LARAVEL_ROOT}/.env"
 
-if [ ! -f "${SECRETS_FILE}" ]; then
-    echo "Unable to locate ${SECRETS_FILE}"
-    exit 1
-else
-    . "${SECRETS_FILE}"
+# Check if already installed
+if [ -f "${ENV_FILE}" ]; then
+    echo "Laravel already configured. Skipping $0"
+    exit 0
 fi
+
+# Check for required variables
+if [ -z "${DB_SSLMODE}" ] || [ -z "${DB_STRICT}" ] || [ -z "${DB_SSL_CAFILE}" ] || [ -z "${DB_USER}" ] || [ -z "${DB_PASS}" ] || [ -z "${DB_HOST}" ] || [ -z "${DB_AHR}" ] || [ -z "${DB_CTO}" ] || [ -z "${DB_CTA}" ]; then
+    echo "ERROR: Missing variables. Please source the secrets file before running $0"
+    exit 1
+fi
+
+echo "$0: Laravel '.env' not yet configured and variables OK. Configuring Laravel..."
 
 cp "${LARAVEL_ROOT}/.env.example" "${ENV_FILE}"
 

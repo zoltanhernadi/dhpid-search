@@ -102,7 +102,7 @@ pipeline {
             }
             steps {
                 sh """
-		    ./container.sh ${containerRegistry}/dhpid-search:${version}
+		    ./container.sh  ${containerRegistry}/dhpid-search:${version}
                 """
             }
         }

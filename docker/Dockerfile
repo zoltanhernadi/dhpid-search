@@ -39,11 +39,12 @@ WORKDIR /var/www/dhpid-search
 RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid-search
 
 # Setup credentials for database connections
-RUN mkdir /run/secrets
-COPY /run/secrets/search_secrets.sh /run/secrets
-COPY setup-application.sh /run/secrets
-RUN chmod u+x /run/secrets/setup-application.sh
-CMD ["/run/secrets/setup-application.sh"]
+#RUN mkdir /run/secrets
+#COPY setup-application.sh /
+#RUN chmod u+x /setup-application.sh
+#CMD ["/setup-application.sh"]
+COPY install.sh /
+RUN chmod +x /install.sh
 
 # Configure and run Apache HTTPD
 RUN cp /var/www/dhpid-search/apache_vhost.example /etc/apache2/sites-available/dhpid-search.conf
