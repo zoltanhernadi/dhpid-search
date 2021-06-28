@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# TODO the php image name will be passed by Jenkins in the future for now we use a static variable
-DOCKERSEARCHIMAGE="dhpid-search:0.1"
+# Path to Artifactory image and version string, given by Jenkins
+DOCKERSEARCHIMAGE="$1"
 
 # Variables common between all environments
-DOCKERSEARCH="dhpid-search" #Main site
+DOCKERSEARCH="dhpid-search" #Search site
 FRESHINSTALL=false
 
 # Check if an existing container exists to determine if this is a fresh install or an update
@@ -24,7 +24,7 @@ docker rm ${DOCKERSEARCH} || true
 
 # Search site
 docker create --name ${DOCKERSEARCH} \
-    -p 8001:80 \
+    -p 8000:80 \
     -e WEBROOT=/var/www/dhpid-search/public \
     --add-host cr2.canadacentral1-a.control.database.windows.net:10.180.29.6 \
     --restart always \

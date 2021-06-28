@@ -98,11 +98,11 @@ pipeline {
                 branch 'master'
             }
             agent {
-                label 'dhpid2-dv-wb-01'
+                label 'dhpid2-dv'
             }
             steps {
                 sh """
-		    ./container.sh
+		    ./container.sh ${containerRegistry}/dhpid-search:${version}
                 """
             }
         }

@@ -34,19 +34,18 @@ rm -rf /tmp/composer-setup.php
 
 COPY /content/ /var/www/dhpid-search/
 
-# TODO: Update this with an appropriate source path
-#COPY /path/to/dhpid-search-dotenv /var/www/dhpid-search/.env
-
 WORKDIR /var/www/dhpid-search
 
 RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid-search
 
-# Set Laravel filesystem permissions
-RUN chgrp -R www-data /var/www/dhpid-search ; touch /var/www/dhpid-search/storage/logs/laravel.log ; chmod g+w /var/www/dhpid-search/storage/logs/laravel.log ; chown -R www-data /var/www/dhpid-search/storage/framework/cache ; chown -R www-data /var/www/dhpid-search/storage/framework/sessions ; chown -R www-data /var/www/dhpid-search/storage/framework/views
+# Setup credentials for database connections
+RUN mkdir /run/secrets
+COPY /run/secrets/search_secrets.sh /run/secrets
+COPY setup-application.sh /run/secrets
+RUN chmod u+x /run/secrets/setup-application.sh
+CMD ["/run/secrets/setup-application.sh"]
 
-# This can only be executed after the .env file has been setup with the appropriate credentials:
-#RUN php artisan key:generate ; php artisan config:cache
-
+# Configure and run Apache HTTPD
 RUN cp /var/www/dhpid-search/apache_vhost.example /etc/apache2/sites-available/dhpid-search.conf
 RUN a2dissite 000-default ; a2ensite dhpid-search
 CMD ["apache2-foreground"]
