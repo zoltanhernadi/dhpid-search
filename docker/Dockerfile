@@ -43,7 +43,7 @@ RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid
 #COPY setup-application.sh /
 #RUN chmod u+x /setup-application.sh
 #CMD ["/setup-application.sh"]
-COPY install.sh /
+COPY /docker/install.sh /
 RUN chmod +x /install.sh
 
 # Configure and run Apache HTTPD

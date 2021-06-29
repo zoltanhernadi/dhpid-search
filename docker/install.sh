@@ -10,7 +10,7 @@ if [ -f "${ENV_FILE}" ]; then
 fi
 
 # Check for required variables
-if [ -z "${DB_SSLMODE}" ] || [ -z "${DB_STRICT}" ] || [ -z "${DB_SSL_CAFILE}" ] || [ -z "${DB_USER}" ] || [ -z "${DB_PASS}" ] || [ -z "${DB_HOST}" ] || [ -z "${DB_AHR}" ] || [ -z "${DB_CTO}" ] || [ -z "${DB_CTA}" ]; then
+if [ -z "${DB_USER}" ] || [ -z "${DB_PASS}" ] || [ -z "${DB_HOST}" ] || [ -z "${DB_AHR}" ] || [ -z "${DB_CTO}" ] || [ -z "${DB_CTA}" ]; then
     echo "ERROR: Missing variables. Please source the secrets file before running $0"
     exit 1
 fi
