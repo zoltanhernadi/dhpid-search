@@ -49,4 +49,7 @@ RUN chmod +x /install.sh
 # Configure and run Apache HTTPD
 RUN cp /var/www/dhpid-search/apache_vhost.example /etc/apache2/sites-available/dhpid-search.conf
 RUN a2dissite 000-default ; a2ensite dhpid-search
-CMD ["apache2-foreground"]
+RUN a2enmod rewrite
+#CMD ["apache2-foreground"]
+
+# END: Please execute /install.sh during container create/start/run.
