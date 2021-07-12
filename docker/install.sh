@@ -41,13 +41,13 @@ if [ ! -f "${ENV_FILE}" ]; then
   cd "${LARAVEL_ROOT}"
 
   # Set Laravel filesystem permissions
-  chgrp -R www-data "${LARAVEL_ROOT}"
   chmod 0440 "${ENV_FILE}"
   touch "${LARAVEL_ROOT}/storage/logs/laravel.log"
   chmod g+w "${LARAVEL_ROOT}/storage/logs/laravel.log"
   chown -R www-data "${LARAVEL_ROOT}/storage/framework/cache"
   chown -R www-data "${LARAVEL_ROOT}/storage/framework/sessions"
   chown -R www-data "${LARAVEL_ROOT}/storage/framework/views"
+  chgrp -R www-data "${LARAVEL_ROOT}"
 
   # This can only be executed after the .env file has been setup with the appropriate credentials:
   php artisan key:generate ; php artisan config:cache
