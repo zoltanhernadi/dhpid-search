@@ -50,6 +50,13 @@ RUN chmod +x /install.sh
 RUN cp /var/www/dhpid-search/apache_vhost.example /etc/apache2/sites-available/dhpid-search.conf
 RUN a2dissite 000-default ; a2ensite dhpid-search
 RUN a2enmod rewrite
+
+# Setup a self-signed TLS certificate for HTTPS
+RUN mkdir -p /etc/apache2/ssl/certs ; chmod 0755 /etc/apache2/ssl/certs ; mkdir -p /etc/apache2/ssl/private ; chmod 0700 /etc/apache2/ssl/private
+RUN openssl req -new -x509 -days 3650 -nodes -out /etc/apache2/ssl/certs/dhpid-search.crt -keyout /etc/apache2/ssl/private/dhpid-search.key -subj "/C=IN/ST=HC-SC/L=Ottawa/O=HC-SC/CN=dhpid.jack.hc-sc.gc.ca"
+RUN sed -i 's|<VirtualHost \*:443>|<VirtualHost *:443>\n\tSSLEngine On\n\tSSLCertificateFile /etc/apache2/ssl/certs/dhpid-search.crt\n\tSSLCertificateKeyFile /etc/apache2/ssl/private/dhpid-search.key\n|' /etc/apache2/sites-available/dhpid-search.conf
+RUN a2enmod ssl
+
 #CMD ["apache2-foreground"]
 
 # END: Please execute /install.sh during container create/start/run.
