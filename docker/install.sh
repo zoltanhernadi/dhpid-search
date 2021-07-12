@@ -51,12 +51,6 @@ if [ ! -f "${ENV_FILE}" ]; then
 
   # This can only be executed after the .env file has been setup with the appropriate credentials:
   php artisan key:generate ; php artisan config:cache
-
-  # Laravel "migrations" create the database schema
-  # Laravel "seeders" inject reference table data
-  php artisan migrate:fresh --database='ahr' --path=database/migrations/AHR ; php artisan db:seed --class=AHRDatabaseSeeder
-  php artisan migrate:fresh --database='cto' --path=database/migrations/CTO ; php artisan db:seed --class=CTODatabaseSeeder
-  php artisan migrate:fresh --database='cta' --path=database/migrations/CTA ; php artisan db:seed --class=CTADatabaseSeeder
 fi
 
 # Ensure apache is running
