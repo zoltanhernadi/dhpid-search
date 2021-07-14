@@ -39,10 +39,6 @@ WORKDIR /var/www/dhpid-search
 RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid-search
 
 # Setup credentials for database connections
-#RUN mkdir /run/secrets
-#COPY setup-application.sh /
-#RUN chmod u+x /setup-application.sh
-#CMD ["/setup-application.sh"]
 COPY /docker/install.sh /
 RUN chmod +x /install.sh
 
@@ -56,7 +52,5 @@ RUN mkdir -p /etc/apache2/ssl/certs ; chmod 0755 /etc/apache2/ssl/certs ; mkdir 
 RUN openssl req -new -x509 -days 3650 -nodes -out /etc/apache2/ssl/certs/dhpid-search.crt -keyout /etc/apache2/ssl/private/dhpid-search.key -subj "/C=IN/ST=HC-SC/L=Ottawa/O=HC-SC/CN=dhpid.jack.hc-sc.gc.ca"
 RUN sed -i 's|<VirtualHost \*:443>|<VirtualHost *:443>\n\tSSLEngine On\n\tSSLCertificateFile /etc/apache2/ssl/certs/dhpid-search.crt\n\tSSLCertificateKeyFile /etc/apache2/ssl/private/dhpid-search.key\n|' /etc/apache2/sites-available/dhpid-search.conf
 RUN a2enmod ssl
-
-#CMD ["apache2-foreground"]
 
 # END: Please execute /install.sh during container create/start/run.
