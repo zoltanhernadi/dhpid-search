@@ -41,6 +41,7 @@ if [ ! -f "${ENV_FILE}" ]; then
   cd "${LARAVEL_ROOT}"
 
   # Set Laravel filesystem permissions
+  echo "Setting file ownership and permissions on ${LARAVEL_ROOT}..."
   chmod 0440 "${ENV_FILE}"
   touch "${LARAVEL_ROOT}/storage/logs/laravel.log"
   chmod g+w "${LARAVEL_ROOT}/storage/logs/laravel.log"

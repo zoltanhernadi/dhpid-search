@@ -3,7 +3,9 @@ DB_PASS=
 # DB_HOST should be the hostname which matches the database server TLS certificate
 DB_HOST=
 # DB_HOST_IP should be the internal (10.x.x.x) address of the database server
-DB_HOST_IP=
+# This is only required if the hostname does not resolve to the correct IP.
+# Be sure to enforce a "--add-host" parameter to Docker during `docker create`.
+#DB_HOST_IP=
 DB_CAFILE="/etc/ssl/certs/Baltimore_CyberTrust_Root.pem"
 # Database name for AHR/DSO
 DB_AHR=

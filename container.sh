@@ -28,14 +28,15 @@ if [ -z "${DB_HOST}" ] || [ -z "${DB_HOST_IP}" ]; then
 fi
 
 # Docker PHP containers
-# Use "--add-host" to ensure that the database service is reachable by
-# the hostname which matches its TLS certificate.
+# Use "--add-host" in the `docker create` command if the environment
+# requires a specific hostname:IP mapping. Set also the correct
+# DB_HOST and DB_HOST_IP values in the secrets file.
+#    --add-host ${DB_HOST}:${DB_HOST_IP} \
 
 # Search site
 docker create --name ${DOCKERSEARCH} \
     -p :443 \
     --env-file ${SECRETS_FILE} \
-    --add-host ${DB_HOST}:${DB_HOST_IP} \
     --restart always \
     ${DOCKERSEARCHIMAGE} \
     /install.sh

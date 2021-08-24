@@ -42,7 +42,7 @@ RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid
 COPY /docker/install.sh /
 RUN chmod +x /install.sh
 
-# Configure and run Apache HTTPD
+# Configure Apache HTTPD, which will be executed by install.sh
 RUN cp /var/www/dhpid-search/apache_vhost.example /etc/apache2/sites-available/dhpid-search.conf
 RUN a2dissite 000-default ; a2ensite dhpid-search
 RUN a2enmod rewrite
