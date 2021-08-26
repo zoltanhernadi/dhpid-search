@@ -30,7 +30,7 @@
     @endif
 @endsection
 @section ('content')
-    <h1>{{__("Clinical trial inspections")}}</h1>
+    <h1 id="wb-cont">{{__("Clinical trial inspections")}}</h1>
     <p>{{__("Clinical trials in Canada for human drugs must meet high safety standards. Canada inspects clinical trials to reduce the risks to people participating in the trials.")}}</p>
     <p>{{__("To learn more about the clinical trial inspections we conduct, you can visit ")}} <a href='{{__("https://www.canada.ca/en/health-canada/services/inspecting-monitoring-drug-health-products/drug-health-product-inspections/about-inspections-clinical-trials-human-drugs.html")}}'>{{__("about clinical trial inspections")}}</a> {{__("or browse these inspection results:")}}</p>
     <ul>
@@ -38,36 +38,38 @@
         <li><a href="{{route('ctaresult', ['sponsorName'=>'','controlNumber'=>'','region'=>'','drug'=>'', 'rating'=>'NC','phase'=>'', 'startDate'=>'','endDate'=>'','language' => app()->getLocale()])}}">{{__("Non-compliant clinical trial inspections search results")}}</a></li>
 	</ul>
 	<p>{{__("You can also do your own search for clinical trial inspections. These results are updated regularly. Please note that the name of a drug could change over the course of a clinical trial.")}}</p>
-    <div id='topError'>
+    <div role="alert" id='topError' tabindex="0">
         <section class='alert alert-danger'>
             <div id='Title'>
             </div>
             <ul id="errorList"></ul>
         </section>
     </div>
-    @if (session('er')==true)
-        @php
-            $er=session('er');
-        @endphp
-        @if(isset($er['status']))
-            <section class="alert alert-danger">
-                <h5>{{__('Error')}}</h5>
-                {{__($er['status'])}}
-            </section>
-        @else
-            @foreach($er as $e)
+    <div role="alert" tabindex="0">
+        @if (session('er')==true)
+            @php
+                $er=session('er');
+            @endphp
+            @if(isset($er['status']))
                 <section class="alert alert-danger">
-                    <h5>{{__('Error')}}</h5>
-                    {{__($e)}}
+                    <h2>{{__('Error')}}</h2>
+                    <p>{{__($er['status'])}}</p>
                 </section>
-            @endforeach
+            @else
+                @foreach($er as $e)
+                    <section class="alert alert-danger">
+                        <h2>{{__('Error')}}</h2>
+                        <p>{{__($e)}}</p>
+                    </section>
+                @endforeach
+            @endif
         @endif
-    @endif
+    </div>
     <section class="panel panel-default">
   		<header class="panel-heading">
    			<h2 class="panel-title">{{__("Search")}}</h2>
 		</header>
-		<form action="{{ route('ctaresult', ['language' => app()->getLocale()]) }}" method="" role="form" class="form-horizontal" id="form"> 
+		<form action="{{route('ctaresult', ['language' => app()->getLocale()])}}" role="form" class="form-horizontal" id="form" novalidate>
 			<div class="panel-body">
 					<div class="form-group">
 						<label class="col-sm-4 control-label" for="sponsorName">{{__("Sponsor name")}}:</label>
@@ -116,20 +118,16 @@
 						</div>
 					</div>
 					<div class="form-group">
-                        @if(isset($er['startDate']) && isset($er['site'])==false)
                             <label class="col-sm-4 control-label" for="startDate">{{__("Inspection start date")}}:</label>
 						    <div class="col-md-8">
-							    <input class="form-control" type="date" name="startDate" id ="startDate" data-rule-dateiso="true" value="{{ old('startDate') }}">
+							    <input class="form-control" type="date" name="startDate" id="startDate" data-rule-dateiso="true" value="{{ old('startDate') }}" min="2012-01-01" />
 						    </div>
+                        @if(isset($er['startDate']) && !isset($er['site']))
                             <section class=" col-sm-4 alert alert-danger">
                                 <h5>{{__('Invalid Inspection Dates')}}</h5>
                                 {{__($er['startDate'])}}
                             </section>
                         @else
-                            <label class="col-sm-4 control-label" for="startDate">{{__("Inspection start date")}}:</label>
-						    <div class="col-md-8">
-							    <input class="form-control" type="date" name="startDate" id ="startDate" data-rule-dateiso="true" value="{{ old('startDate') }}">
-						    </div>
                             <div id="startError"></div>
                         @endif
 					</div>
@@ -148,7 +146,7 @@
 			</div>
 			<footer class="panel-footer">
 						<div class="foot text-center">
-							<button type="submit" class="btn btn-primary">{{__("Submit")}}</button>
+							<button id="submit" type="submit" class="btn btn-primary">{{__("Submit")}}</button>
 							<button onClick="window.location.reload();" type="reset" class="btn btn-default">{{__("Reset")}}</button>
 						</div>
 			</footer>
@@ -156,24 +154,68 @@
 	</section>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
-        $('#startDate').change(function(){
+        $('#startDate').focusout(function(){
             datesChecker();
+        });
+
+        $(document).ready(function(){
+            $('#startDate').attr('max', function(){
+                return new Date().toISOString().split('T')[0];
+            });
+        });
+
+        $(document).ready(function(){
+            $('#endDate').attr('max', function(){
+                return new Date().toISOString().split('T')[0];
+            });
         });
 
         window.onload=datesChecker();
         function datesChecker(){
             var now = new Date();
             var sdate = new Date($('#startDate').val());
+            var min = new Date('2012-01-01');
             var count =0;
-            if(sdate>now){
+            if(sdate == "Invalid Date" && $('#startDate').val() != ''){
                 $('#topError').show();
                 var html = "<section class='alert alert-danger'><h3>{{__('Error')}}</h3>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</section>";
-                var list = "<li id='1'>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</li>";
+                var list = "<li id='1'><a href='#startDate'>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</a></li>";
                 $('#startError').empty();
                 $('#startError').append(html);
+                $('#0').remove();
                 $('#1').remove();
+                $('#2').remove();
                 $('#errorList').append(list);
                 $('#form').attr('onsubmit','return false;');
+                $('#submit').attr('disabled', true);
+                count++;
+            }
+            else if (sdate<min){
+                $('#topError').show();
+                var html = "<section class='alert alert-danger'><h3>{{__('Error')}}</h3>{{__('Inspection start date - Please enter a value greater than or equal to ')}}"+min.toISOString().split('T')[0]+".</section>";
+                var list = "<li id='0'><a href='#startDate'>{{__('Inspection start date - Please enter a value greater than or equal to ')}}"+min.toISOString().split('T')[0]+".</a></li>";
+                $('#startError').empty();
+                $('#startError').append(html);
+                $('#0').remove();
+                $('#1').remove();
+                $('#2').remove();
+                $('#errorList').append(list);
+                $('#form').attr('onsubmit','return false;');
+                $('#submit').attr('disabled', true);
+                count++;
+            }
+            else if(sdate>now){
+                $('#topError').show();
+                var html = "<section class='alert alert-danger'><h3>{{__('Error')}}</h3>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</section>";
+                var list = "<li id='2'><a href='#startDate'>{{__('Inspection start date - Please enter a value less than or equal to ')}}"+now.toISOString().split('T')[0]+".</a></li>";
+                $('#startError').empty();
+                $('#startError').append(html);
+                $('#0').remove();
+                $('#1').remove();
+                $('#2').remove();
+                $('#errorList').append(list);
+                $('#form').attr('onsubmit','return false;');
+                $('#submit').attr('disabled', true);
                 count++;
             }
             if(count==0){
@@ -181,14 +223,16 @@
                 $('#startError').empty();
                 $('#errorList').empty();
                 $('#form').attr('onsubmit','return true;');
+                $('#submit').attr('disabled', false);
             }
             else if(count==1){
                 $('#Title').empty();
-                $('#Title').append("<h2 id='errorTitle'>{{__('The form could not be submitted because ')}}"+count+"{{__(' error was found')}}</h2>");            }
+                $('#Title').append("<h2 id='errorTitle'>{{__('The form could not be submitted because ')}}"+count+"{{__(' error was found')}}</h2>");
+            }
             else{
                 $('#Title').empty();
                 $('#Title').append("<h2 id='errorTitle'>{{__('The form could not be submitted because ')}}"+count+"{{__(' errors were found.')}}");
-            } 
+            }
         }
 	</script>
 @endsection

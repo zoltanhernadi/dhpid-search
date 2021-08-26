@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="no-js" lang="{{__('en')}}" dir="ltr">
+<html class="no-js" lang="{{__('en')}}" dir="ltr">
 <head>
 	<meta charset="utf-8">
 	<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
@@ -37,7 +37,17 @@
     </script>
 </head>
 <body vocab="http://schema.org/" typeof="WebPage">
-	<div id = "def-top" href="layout.blade.php">
+  <nav>
+    <ul id="wb-tphp">
+      <li class="wb-slc">
+	<a class="wb-sl" href="#wb-cont">Skip to main content</a>
+      </li>
+      <li class="wb-slc">
+	<a class="wb-sl" href="#wb-info">Skip to "About government"</a>
+      </li>
+    </ul>
+  </nav>
+	<div id="def-top">
 		<header>
 			<div id="wb-bnr" class="container">
 				<div class="row">
@@ -51,7 +61,7 @@
 					</div>
 					<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
 						<h2>Search</h2>
-						<form action="https://recherche-search.gc.ca/rGs/s_r?#wb-land" method="post" name="cse-search-box" role="search">
+						<form action="https://www.canada.ca/{{__('en')}}/sr/srb.html" method="post" name="cse-search-box" role="search">
 							<div class="form-group wb-srch-qry">
 								<label for="wb-srch-q" class="wb-inv">{{__("Search Canada.ca")}}</label>
 								<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="{{__('Search Canada.ca')}}">

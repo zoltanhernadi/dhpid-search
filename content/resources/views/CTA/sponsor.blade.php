@@ -30,7 +30,7 @@
     @endif
 @endsection
 @section ('content')
-    <h1>{{__("Clinical trial inspection - site profile")}}</h1>
+    <h1 id="wb-cont">{{__("Clinical trial inspection - site profile")}}</h1>
     <section class="panel panel-default">
   		<header class="panel-heading">
    			<h2 class="panel-title">{{__("Sponsor information")}}</h2>

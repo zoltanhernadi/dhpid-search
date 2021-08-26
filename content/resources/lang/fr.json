@@ -132,5 +132,7 @@
     "Trial phase":"Phase d'essai",
     "Below are the results for clinical trial inspections in Canada.":"Voici les résultats des inspections d'essai cliniques réalisés au Canada.",
     "Type of inspection":"Type d'inspection",
-    "Manitoba and Saskatchewan":"Manitoba et Saskatchewan"
+    "Manitoba and Saskatchewan":"Manitoba et Saskatchewan",
+    "Inspection start date - Please enter a value greater than or equal to ":"Date de début d’inspection - veuillez saisir une valeur supérieure ou égale à ",
+    "Inspection end date - Please enter a value greater than or equal to ":"Date de fin d’inspection - veuillez saisir une valeur supérieure ou égale à "
 }

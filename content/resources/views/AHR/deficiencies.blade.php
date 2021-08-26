@@ -30,7 +30,7 @@
     @endif
 @endsection
 @section ('content')
-    <h1>{{__("Donor sperm and ova inspections")}}</h1>
+    <h1 id="wb-cont">{{__("Donor sperm and ova inspections")}}</h1>
     <section class="panel panel-default">
         <div class="panel-heading container-fluid">
             <div class="row">

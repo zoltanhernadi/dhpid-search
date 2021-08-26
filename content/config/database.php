@@ -14,7 +14,7 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
-    //default database set to ahr
+
     'default' => env('DB_CONNECTION', 'ahr'),
 
     /*
@@ -42,7 +42,7 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
-        // renamed database to ahr for distinction
+
         'ahr' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -56,15 +56,13 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
+            'strict' => true,
             'engine' => null,
-            'strict' => env('DB_STRICT', true),
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('DB_SSL_CAFILE', NULL),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('DB_SSL_VERIFY', false),
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        //second database call to env
+
         'cto' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL_CTO'),
@@ -78,15 +76,13 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
+            'strict' => true,
             'engine' => null,
-            'strict' => env('DB_STRICT', true),
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('DB_SSL_CAFILE', NULL),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('DB_SSL_VERIFY', false),
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        //third database call to env
+
         'cta' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL_CTA'),
@@ -100,14 +96,13 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
+            'strict' => true,
             'engine' => null,
-            'strict' => env('DB_STRICT', true),
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('DB_SSL_CAFILE', NULL),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('DB_SSL_VERIFY', false),
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
