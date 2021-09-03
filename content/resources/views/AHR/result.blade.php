@@ -90,7 +90,6 @@
                     @endforeach
                 </tbody>
             </table>
-            {{__("If you have further questions, please")}} <a href="mailto:hc.bpcp-pcpb.sc@canada.ca">{{__("email Biological Product Compliance Program")}}</a>
          </div>		  
     </section>
 @endsection

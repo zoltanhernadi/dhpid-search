@@ -142,7 +142,6 @@
 							</select>
 						</div>
 					</div>
-				{{__("If you have further questions, please")}} <a href="mailto:hc.bpcp-pcpb.sc@canada.ca">{{__("email Biological Product Compliance Program")}}</a>
 			</div>
 			<footer class="panel-footer">
 						<div class="foot text-center">
@@ -151,7 +150,8 @@
 						</div>
 			</footer>
 		</form>
-	</section>
+        </section>
+	<p>{{__("If you have further questions, please email ")}} <a href="mailto:hc.bpcp-pcpb.sc@canada.ca">{{__("Health Canada")}}</a></p>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
         $('#startDate').focusout(function(){
