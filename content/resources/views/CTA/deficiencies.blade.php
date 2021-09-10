@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr class="active">
@@ -81,7 +81,7 @@
 		</header>
         <div class="panel-body container-fluid">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 table-responsive">
                     <table class="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : true }'>
                         <thead>
                             <tr class="active">

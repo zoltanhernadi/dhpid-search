@@ -35,7 +35,7 @@
   		<header class="panel-heading">
    			<h2 class="panel-title">{{__("Search results")}}</h2>
         </header>
-        <div class="panel-body container-fluid">
+        <div class="panel-body container-fluid table-responsive">
             @if($params['rating'] == 'NC')
                 <p>{{__("Below are the results for non-compliant cells, tissues and organs (CTO) inspections in Canada.")}}</p>
                 <p>{{__("You can also learn about what ")}}<a href='{{__("https://www.canada.ca/en/health-canada/services/inspecting-monitoring-drug-health-products/drug-health-product-inspections/about-cells-tissues-organs-cto-inspections.html#s3")}}'>{{__("non-compliant CTO inspections")}}</a>{{__(" involve.")}}</p>

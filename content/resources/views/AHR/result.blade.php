@@ -35,7 +35,7 @@
   		<header class="panel-heading">
    			<h2 class="panel-title">{{__("Search results")}}</h2>
         </header>
-        <div class="panel-body container-fluid">
+        <div class="panel-body container-fluid table-responsive">
             @if($params['rating'] == 'NC')
                 <p>{{__("Below are the results for non-compliant donor sperm and ova inspections in Canada.")}}</p>
                 <p>{{__("You can also learn about what ")}}<a href='{{__("https://www.canada.ca/en/health-canada/services/drugs-health-products/compliance-enforcement/assisted-human-reproduction/inspections.html#a3")}}'>{{__("non-compliant donor sperm and ova inspections")}}</a>{{__(" involve.")}}</p>

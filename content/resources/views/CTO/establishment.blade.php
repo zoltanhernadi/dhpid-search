@@ -88,7 +88,7 @@
         <div class="panel-body container-fluid">
             <div class="row">
                 <div class="col-md-3 col-md-offset-2"><label>{{__("Inspection")}}:</label></div>
-                <div class="col-md-7">
+                <div class="col-md-7 table-responsive">
                     <table class="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : true, "order": [[ 3, "desc" ]] }'>
                         <thead>
                             <tr>
