@@ -151,7 +151,7 @@
 			</footer>
 		</form>
         </section>
-	<p>{{__("If you have further questions, please email ")}} <a href="mailto:hc.bpcp-pcpb.sc@canada.ca">{{__("Health Canada")}}</a></p>
+	<p>{{__("If you have further questions, please email ")}} <a href="mailto:gcp_bpc@hc-sc.gc.ca">{{__("Health Canada")}}</a></p>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
         $('#startDate').focusout(function(){
