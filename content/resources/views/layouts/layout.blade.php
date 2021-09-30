@@ -8,7 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta content="width=device-width,initial-scale=1" name="viewport">
 	<meta name="description" content="Static header and footer on Bootstrap 3 with the mega menu. Web Experience Toolkit (WET) includes reusable components for building and maintaining innovative Web sites that are accessible, usable, and interoperable.">
-	<link href="/GCWeb/src/assets/favicon.ico" rel="icon" type="image/x-icon">
+	<meta property="dcterms.title" content="">
+    <meta property="dcterms.creator" content="">
+    <meta property="dcterms.issued" title="W3CDTF" content="">
+    <meta property="dcterms.modified" title="W3CDTF" content="">
+    <meta property="dcterms.subject" title="gccore" content="">
+    <meta property="dcterms.language" title="ISO639-2/T" content="">
+    <link href="/GCWeb/src/assets/favicon.ico" rel="icon" type="image/x-icon">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<noscript><link rel="stylesheet" href="/wet-boew-4.0.36/css/noscript.min.css" /></noscript>
     <link rel="stylesheet" href="/GCWeb/themes-dist-8.0-gcweb/css/theme.min.css">
@@ -40,10 +46,10 @@
   <nav>
     <ul id="wb-tphp">
       <li class="wb-slc">
-	<a class="wb-sl" href="#wb-cont">Skip to main content</a>
+	<a class="wb-sl" href="#wb-cont">{{__("Skip to main content")}}</a>
       </li>
       <li class="wb-slc">
-	<a class="wb-sl" href="#wb-info">Skip to "About government"</a>
+	<a class="wb-sl" href="#wb-info">{{__("Skip to 'About government'")}}</a>
       </li>
     </ul>
   </nav>
