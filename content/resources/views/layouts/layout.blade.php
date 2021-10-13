@@ -7,14 +7,12 @@
 	@yield('title')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta content="width=device-width,initial-scale=1" name="viewport">
-	<meta name="description" content="Static header and footer on Bootstrap 3 with the mega menu. Web Experience Toolkit (WET) includes reusable components for building and maintaining innovative Web sites that are accessible, usable, and interoperable.">
-	<meta property="dcterms.title" content="">
-    <meta property="dcterms.creator" content="">
-    <meta property="dcterms.issued" title="W3CDTF" content="">
-    <meta property="dcterms.modified" title="W3CDTF" content="">
-    <meta property="dcterms.subject" title="gccore" content="">
-    <meta property="dcterms.language" title="ISO639-2/T" content="">
-    <link href="/GCWeb/src/assets/favicon.ico" rel="icon" type="image/x-icon">
+    <meta property="dcterms.creator" content='{{__("Health Canada")}}'>
+    @yield('meta')
+    <meta property="dcterms.issued" title="W3CDTF" content="2021-10-01">
+    <meta property="dcterms.modified" title="W3CDTF" content="2021-10-01">
+    <meta property="dcterms.language" title="ISO639-2/T" content='{{__("eng")}}'>
+	<link href="/GCWeb/src/assets/favicon.ico" rel="icon" type="image/x-icon">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<noscript><link rel="stylesheet" href="/wet-boew-4.0.36/css/noscript.min.css" /></noscript>
     <link rel="stylesheet" href="/GCWeb/themes-dist-8.0-gcweb/css/theme.min.css">
@@ -33,7 +31,8 @@
 	</script>
         -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-181759316-1"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-181759316-1" integrity="sha384-w4Zjdv3YvW+Jt04BH5VFdjaCNEs8lDNpB6qszS8pyr9VtdGMjBq5d32BoXmCp9Zt" crossorigin="anonymous"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -57,7 +56,31 @@
 		<header>
 			<div id="wb-bnr" class="container">
 				<div class="row">
-                    @yield('translate')
+                    @if (Config::get('app.locale')=="en")
+                        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+                            <h2 class="wb-inv">Language selection</h2>
+                            <ul class="list-inline mrgn-bttm-0">
+                                <li>
+                                    @yield('frswitch')
+                                        <span class="hidden-xs">Français</span>
+                                        <abbr id="abfr" title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">Fr</abbr>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    @elseif (Config::get('app.locale')=="fr")
+                        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+                            <h2 class="wb-inv">Language selection</h2>
+                            <ul class="list-inline mrgn-bttm-0">
+                                <li>
+                                    @yield('enswitch')
+                                        <span class="hidden-xs">English</span>
+                                        <abbr id="abfr" title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">En</abbr>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    @endif
 					<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
 						<a href="https://www.canada.ca/en.html" property="url">
 							<img src="/GCWeb/src/assets/sig-blk-en.svg" alt="" property="logo"><span class="wb-inv" property="name"> Government of Canada / <span lang="fr">Gouvernement du Canada</span></span>
@@ -254,7 +277,6 @@
 			</div>
 		</footer>
 		@endif
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 	<script src="/GCWeb/themes-dist-8.0-gcweb/js/wet-boew.min.js"></script>
 	<script src="/GCWeb/themes-dist-8.0-gcweb/js/theme.min.js"></script>
 </body>

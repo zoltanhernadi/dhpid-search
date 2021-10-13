@@ -1,33 +1,12 @@
-@extends('layouts.layout')
-@section('title')
-    <title>{{__("Clinical trial inspections")}}</title>
+@extends('layouts.ctalayout')
+@section('ctameta')
+<meta property="dcterms.subject" title="gccore" content='{{__("Clinical trial inspections sponsor page")}}'>
 @endsection
-@section('translate')
-    @if (Config::get('app.locale')=="en")
-        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-		    <h2 class="wb-inv">Language selection</h2>
-		    <ul class="list-inline mrgn-bttm-0">
-			    <li>
-				    <a id="langfr" lang="fr" hreflang="fr" href="{{route(Route::currentRouteName(), ['sponsor_id'=> $sponsor->id, 'trial_id' =>$trial->id, 'phase_id' => $phase->id, 'language'=>'fr'])}}">
-					    <span class="hidden-xs">Français</span>
-					     <abbr id="abfr" title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">Fr</abbr>
-				    </a>
-			    </li>
-		    </ul>
-	    </section>
-    @elseif (Config::get('app.locale')=="fr")
-        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-            <h2 class="wb-inv">Language selection</h2>
-            <ul class="list-inline mrgn-bttm-0">
-                <li>
-                    <a id="langen" lang="en" hreflang="en" href="{{route(Route::currentRouteName(), ['sponsor_id'=> $sponsor->id, 'trial_id' =>$trial->id, 'phase_id' => $phase->id, 'language'=>'en'])}}">
-                        <span class="hidden-xs">English</span>
-                        <abbr id="abfr" title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">En</abbr>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    @endif
+@section('frswitch')
+    <a id="langfr" lang="fr" hreflang="fr" href="{{route(Route::currentRouteName(), ['sponsor_id'=> $sponsor->id, 'trial_id' =>$trial->id, 'phase_id' => $phase->id, 'language'=>'fr'])}}">
+@endsection
+@section('enswitch')
+    <a id="langen" lang="en" hreflang="en" href="{{route(Route::currentRouteName(), ['sponsor_id'=> $sponsor->id, 'trial_id' =>$trial->id, 'phase_id' => $phase->id, 'language'=>'en'])}}">
 @endsection
 @section ('content')
     <h1 id="wb-cont">{{__("Clinical trial inspection - site profile")}}</h1>
@@ -73,7 +52,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-3 col-sm-offset-2"><label>{{__("Trial phase")}}:</label></div>
-                <div class="col-sm-6">    
+                <div class="col-sm-6">
                     <td>
                         @if(Config::get('app.locale')=="en")
                             {{$phase->en}}
@@ -132,5 +111,5 @@
                 </div>
         </div>
     </section>
-    
+
 @endsection
