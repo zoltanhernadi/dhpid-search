@@ -15,6 +15,13 @@ if [ ! -f "${ENV_FILE}" ]; then
 
   cp "${LARAVEL_ROOT}/.env.example" "${ENV_FILE}"
 
+  # Debug output is optional per-environment, defaults to false
+  if [ -z "${APP_DEBUG}" ]; then
+      sed -i "s|^APP_DEBUG=.*\$|APP_DEBUG=false|" "${ENV_FILE}"
+  else
+      sed -i "s|^APP_DEBUG=.*\$|APP_DEBUG=${APP_DEBUG}|" "${ENV_FILE}"
+  fi
+
   # Setup DB TLS for Azure environment
   sed -i "s|^DB_SSLMODE=.*\$|DB_SSLMODE=require|" "${ENV_FILE}"
   sed -i "s|^DB_STRICT=.*\$|DB_STRICT=false|" "${ENV_FILE}"

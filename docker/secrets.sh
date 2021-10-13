@@ -15,3 +15,5 @@ DB_CTO=
 DB_CTA=
 # This is where Laravel's index.php resides
 WEBROOT="/var/www/dhpid-search/public"
+# APP_DEBUG defaults to false if not defined here
+#APP_DEBUG=
