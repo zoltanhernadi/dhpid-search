@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\TopSearchController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::redirect('/', '/dso/en/search');
-Route::group(['prefix' => 'dso'], function(){
+Route::group(['prefix' => 'dso'], function () {
 
-    Route::group(['prefix' => '{language}'], function(){
+    Route::group(['prefix' => '{language}'], function () {
         Route::view('/search', 'AHR.search')->name('search');
         Route::get('/establishment', 'AHR\EstablishmentController@establishmentPage')->name('establishment');
         Route::get('/deficiencies', 'AHR\InitialDeficienciesController@deficiencies')->name('deficiencies');
@@ -26,8 +28,8 @@ Route::group(['prefix' => 'dso'], function(){
 });
 
 Route::redirect('/cto', '/cto/en/search');
-Route::group(['prefix' => 'cto'], function(){
-    Route::group(['prefix' =>'{language}'], function(){
+Route::group(['prefix' => 'cto'], function () {
+    Route::group(['prefix' => '{language}'], function () {
         Route::view('/search', 'CTO.search')->name('ctosearch');
         Route::get('/result', 'CTO\ResultController@receive')->name('ctoresult');
         Route::get('/establishment', 'CTO\EstablishmentController@establishmentPage')->name('ctoestablishment');
@@ -37,12 +39,23 @@ Route::group(['prefix' => 'cto'], function(){
 });
 
 Route::redirect('/gcp', '/gcp/en/search');
-Route::group(['prefix' => 'gcp'], function(){
-    Route::group(['prefix' =>'{language}'], function(){
+Route::group(['prefix' => 'gcp'], function () {
+    Route::group(['prefix' => '{language}'], function () {
         Route::view('/search', 'CTA.search')->name('ctasearch');
         Route::get('/result', 'CTA\ResultController@receive')->name('ctaresult');
         Route::get('/sponsor', 'CTA\SponsorController@sponsorPage')->name('ctasponsor');
         Route::get('/deficiencies', 'CTA\InitialDeficienciesController@deficiencies')->name('ctadeficiencies');
         Route::get('/reportcard', 'CTA\ReportCardController@reportcard')->name('ctareportcard');
     });
+});
+
+Route::group(['prefix' => '{language}'], function () {
+    Route::get('/topsearch', function (Request $request) {
+        $q = $request->input('q');
+        if (Config::get('app.locale') == "en") {
+            return redirect()->away('https://www.canada.ca/en/sr/srb.html?q=' . $q);
+        } else {
+            return redirect()->away('https://www.canada.ca/fr/sr/srb.html?q=' . $q);
+        }
+    })->name('topsearch');
 });

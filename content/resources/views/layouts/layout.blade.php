@@ -82,15 +82,15 @@
                         </section>
                     @endif
 					<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
-						<a href="https://www.canada.ca/en.html" property="url">
-							<img src="/GCWeb/src/assets/sig-blk-en.svg" alt="" property="logo"><span class="wb-inv" property="name"> Government of Canada / <span lang="fr">Gouvernement du Canada</span></span>
+						<a @if(Config::get('app.locale')=="fr")href="https://www.canada.ca/fr.html"@else href="https://www.canada.ca/en.html"@endif>
+							<img @if(Config::get('app.locale')=="fr")src="/GCWeb/src/assets/sig-blk-fr.svg"@else src="/GCWeb/src/assets/sig-blk-en.svg"@endif alt="" property="logo"><span class="wb-inv" property="name"> Government of Canada / <span lang="fr">Gouvernement du Canada</span></span>
 						</a>
 						<meta property="areaServed" typeof="Country" content="Canada">
 						<link property="logo" href="GCWeb/src/assets/wmms-blk.svg">
 					</div>
 					<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
 						<h2>Search</h2>
-						<form action="https://www.canada.ca/{{__('en')}}/sr/srb.html" method="post" name="cse-search-box" role="search">
+						<form action="{{route('topsearch', ['language' => app()->getLocale()])}}" method="get" name="cse-search-box" role="search">
 							<div class="form-group wb-srch-qry">
 								<label for="wb-srch-q" class="wb-inv">{{__("Search Canada.ca")}}</label>
 								<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="{{__('Search Canada.ca')}}">
@@ -211,7 +211,7 @@
 						<li><a href="https://www.canada.ca/en/government/system/laws.html">Treaties, laws and regulations</a></li>
 						<li><a href="https://www.canada.ca/en/transparency/reporting.html">Government-wide reporting</a></li>
 						<li><a href="https://pm.gc.ca/eng">Prime Minister</a></li>
-						<li><a href="https://www.canada.ca/en/government/system.html">How government works</a></li>
+						<li><a href="https://www.canada.ca/en/government/system.html">About government</a></li>
 						<li><a href="https://open.canada.ca/en/">Open government</a></li>
 					</ul>
 				</nav>
@@ -248,7 +248,7 @@
 						<li><a href="https://www.canada.ca/fr/gouvernement/systeme/lois.html">Traités, lois et règlements</a></li>
 						<li><a href="https://www.canada.ca/fr/transparence/rapports.html">Rapports à l'échelle du gouvernement</a></li>
 						<li><a href="https://pm.gc.ca/fra">Premier ministre</a></li>
-						<li><a href="https://www.canada.ca/fr/gouvernement/systeme.html">Comment le gouvernement fonctionne</a></li>
+						<li><a href="https://www.canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li>
 						<li><a href="https://ouvert.canada.ca/">Gouvernement ouvert</a></li>
 					</ul>
 				</nav>
@@ -270,7 +270,7 @@
 							<a href="#wb-cont">Haut de la page <span class="glyphicon glyphicon-chevron-up"></span></a>
 						</div>
 						<div class="col-xs-6 col-md-3 col-lg-2 text-right">
-							<img src="../GCWeb/assets/wmms-blk.svg" alt="Symbole du gouvernement du Canada">
+							<img src="/GCWeb/src/assets/wmms-blk.svg" alt="Symbole du gouvernement du Canada">
 						</div>
 					</div>
 				</div>
