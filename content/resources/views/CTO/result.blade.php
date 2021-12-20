@@ -12,7 +12,11 @@
     <a id="langen" lang="en" hreflang="en" href="{{route(Route::currentRouteName(), $params+['language'=>'en'])}}">
 @endsection
 @section('content')
-    <h1 id="wb-cont">{{__("Cells, tissues and organs (CTO) inspections")}}</h1>
+    @if($params['rating'] == 'NC')
+        <h1 id="wb-cont">{{__("Non-compliant cells, tissues and organs (CTO) inspections")}}</h1>
+    @else
+        <h1 id="wb-cont">{{__("Cells, tissues and organs (CTO) inspections")}}</h1>
+    @endif
     <section class="panel panel-default">
   		<header class="panel-heading">
    			<h2 class="panel-title">{{__("Search results")}}</h2>

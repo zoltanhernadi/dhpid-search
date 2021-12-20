@@ -82,9 +82,14 @@
                         </section>
                     @endif
 					<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
-						<a @if(Config::get('app.locale')=="fr")href="https://www.canada.ca/fr.html"@else href="https://www.canada.ca/en.html"@endif>
-							<img @if(Config::get('app.locale')=="fr")src="/GCWeb/src/assets/sig-blk-fr.svg"@else src="/GCWeb/src/assets/sig-blk-en.svg"@endif alt="" property="logo"><span class="wb-inv" property="name"> Government of Canada / <span lang="fr">Gouvernement du Canada</span></span>
-						</a>
+                        <a @if(Config::get('app.locale')=="fr")href="https://www.canada.ca/fr.html"@else href="https://www.canada.ca/en.html"@endif>
+							<img @if(Config::get('app.locale')=="fr")src="/GCWeb/src/assets/sig-blk-fr.svg"@else src="/GCWeb/src/assets/sig-blk-en.svg"@endif alt="" property="logo">
+                            @if (Config::get('app.locale')=="en")
+                                <span class="wb-inv" property="name"> / <span lang="fr">Gouvernement du Canada</span></span>
+                            @else
+                                <span class="wb-inv" property="name"> / <span lang="en">Government of Canada</span></span>
+                            @endif
+                        </a>
 						<meta property="areaServed" typeof="Country" content="Canada">
 						<link property="logo" href="GCWeb/src/assets/wmms-blk.svg">
 					</div>
