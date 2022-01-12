@@ -70,7 +70,7 @@
                         </section>
                     @elseif (Config::get('app.locale')=="fr")
                         <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-                            <h2 class="wb-inv">Language selection</h2>
+                            <h2 class="wb-inv">Sélection de la langue</h2>
                             <ul class="list-inline mrgn-bttm-0">
                                 <li>
                                     @yield('enswitch')
@@ -94,7 +94,7 @@
 						<link property="logo" href="GCWeb/src/assets/wmms-blk.svg">
 					</div>
 					<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
-						<h2>Search</h2>
+						<h2>{{__('Search')}}</h2>
 						<form action="{{route('topsearch', ['language' => app()->getLocale()])}}" method="get" name="cse-search-box" role="search">
 							<div class="form-group wb-srch-qry">
 								<label for="wb-srch-q" class="wb-inv">{{__("Search Canada.ca")}}</label>

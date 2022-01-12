@@ -69,7 +69,51 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($inspection->deficiencies as $d)
+                            @php
+                                $check=false;
+                                $innercheck=false;
+                                foreach($inspection->deficiencies as $d){
+                                    if($check==false){
+                                        $dnum=$d->pivot->observationNumber;
+                                        $check=true;
+                                        echo '<tr>';
+                                        if(Config::get('app.locale')=='en'){
+                                            echo '<td>'.$d->regulation->en.'</td>';
+                                        }
+                                        else{
+                                            echo '<td>'.$d->regulation->fr.'</td>';
+                                        }
+                                        echo '<td><ul>';
+                                    }
+                                    if($d->pivot->observationNumber == $dnum){
+                                        if(Config::get('app.locale')=='en'){
+                                            echo'<li>'.$d->en.'</li>';
+                                        }
+                                        else{
+                                            echo'<li>'.$d->fr.'</li>';
+                                        }
+                                    }
+                                    else{
+                                        echo'</ul></tr>';
+                                        echo '<tr>';
+                                        if(Config::get('app.locale')=='en'){
+                                            echo '<td>'.$d->regulation->en.'</td>';
+                                        }
+                                        else{
+                                            echo '<td>'.$d->regulation->fr.'</td>';
+                                        }
+                                        echo '<td><ul>';
+                                        if(Config::get('app.locale')=='en'){
+                                            echo'<li>'.$d->en.'</li>';
+                                        }
+                                        else{
+                                            echo'<li>'.$d->fr.'</li>';
+                                        }
+                                        $dnum=$d->pivot->observationNumber;
+                                    }
+                                }
+                            @endphp
+                           {{--  @foreach($inspection->deficiencies as $d)
                                 <tr>
                                     @if(Config::get('app.locale')=="en")
                                         <td>{{$d->regulation->en}}</td>
@@ -79,7 +123,7 @@
                                         <td>{{$d->fr}}</td>
                                     @endif
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>

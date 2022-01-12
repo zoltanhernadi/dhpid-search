@@ -18,10 +18,10 @@ class Inspection extends Model
         // Use hasManyThrough() instead of hasMany() to obtain extra
         // fields like Observation Number and Line Number.
         return $this->belongsToMany(
-            'App\Models\AHR\Deficiency', 
-            'App\Models\AHR\InspectionsDeficiency', 
-            'inspectionID', 
-            'deficiencyID');
+            'App\Models\AHR\Deficiency',
+            'App\Models\AHR\InspectionsDeficiency',
+            'inspectionID',
+            'deficiencyID')->withPivot('observationNumber','lineNumber')->orderBy('observationNumber','asc')->orderBy('lineNumber', 'asc');
     }
 
     public function inspectionType(){
