@@ -44,7 +44,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-3 col-sm-offset-2"><label>{{__("Registration number")}}:</label></div>
-                <div class="col-sm-3">{{$establishment->registrationNumber}}</div>
+                <div class="col-sm-3">@php printf("%06d", $establishment->registrationNumber)@endphp</div>
             </div>
             <div class="row">
                 <div class="col-sm-3 col-sm-offset-2"><label>{{__("Notification")}}:</label></div>
