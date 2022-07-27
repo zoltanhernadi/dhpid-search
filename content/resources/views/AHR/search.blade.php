@@ -10,7 +10,7 @@
 @endsection
 @section ('content')
     <h1 id="wb-cont">{{__("Donor sperm and ova inspections")}}</h1>
-    <p>{{__("In Canada, donor sperm and ova (eggs) must meet safety standards before it can be used in assisted human reproduction (AHR). On February 24, 2020, new regulations came into force regarding the safety of sperm and ova which outline requirements for all establishments and health professionals who process, import, distribute or make use of donor sperm or ova (eggs) for the purpose of AHR.")}}</p>
+    <p>{{__("In Canada, donor sperm and ova (eggs) must meet safety standards before it can be used in assisted human reproduction (AHR). On February 4, 2020, new regulations came into force regarding the safety of sperm and ova which outline requirements for all establishments and health professionals who process, import, distribute or make use of donor sperm or ova (eggs) for the purpose of AHR.")}}</p>
     <p>{{__("To learn more about the donor sperm and ova inspections we conduct, visit ")}} <a href='{{__("https://www.canada.ca/en/health-canada/services/drugs-health-products/compliance-enforcement/assisted-human-reproduction/inspections.html")}}'>{{__("about donor sperm and ova inspections")}}</a> {{__("or browse these inspection results:")}}</p>
     <ul>
         <li><a href="{{route('result', ['language' => app()->getLocale()]) }}">{{__("Donor sperm and ova inspections in Canada search results")}}</a></li>
