@@ -1,6 +1,5 @@
 # DHPID
-FROM php:7.3.27-apache-stretch
-#FROM ubuntu:20.04
+FROM php:8-apache-bullseye
 
 LABEL name = 'DHPID'
 LABEL maintainer = 'Xelerance - Mike Mallett'
@@ -9,8 +8,8 @@ LABEL email = 'mmallett@xelerance.com'
 WORKDIR /var/www
 
 RUN apt update
-RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev mysql-client
-RUN docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir --with-png-dir --with-zlib-dir --with-xpm-dir --with-freetype-dir
+RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev default-mysql-client
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql mysqli gd opcache zip
 RUN rm -rf /var/lib/apt/lists/*
 

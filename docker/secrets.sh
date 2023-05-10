@@ -6,7 +6,7 @@ DB_HOST=
 # This is only required if the hostname does not resolve to the correct IP.
 # Be sure to enforce a "--add-host" parameter to Docker during `docker create`.
 #DB_HOST_IP=
-DB_CAFILE="/etc/ssl/certs/Baltimore_CyberTrust_Root.pem"
+DB_CAFILE="/etc/ssl/certs/Azure_MySQL_combined_2023.crt"
 # Database name for AHR/DSO
 DB_AHR=
 # Database name for Cells, Tissues, and Organs
