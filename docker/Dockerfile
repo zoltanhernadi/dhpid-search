@@ -1,7 +1,7 @@
 # DHPID
 FROM php:8-apache-bullseye
 
-LABEL name = 'DHPID'
+LABEL name = 'DHPID Search'
 LABEL maintainer = 'Xelerance - Mike Mallett'
 LABEL email = 'mmallett@xelerance.com'
 
