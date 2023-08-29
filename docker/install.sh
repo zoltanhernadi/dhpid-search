@@ -13,12 +13,12 @@ if [ ! -f "${ENV_FILE}" ]; then
 
   # These paths are correct for Debian 11 (bullseye). Update as needed by Azure MySQL PaaS TLS.
   echo "$0: Combining SSL CA certs for use in Azure MySQL PaaS TLS negotiation..."
-  if [ ! -f "/usr/share/ca-certificate/mozilla/Baltimore_CyberTrust_root.crt" ] ||
-     [ ! -f "/usr/share/ca-certificate/mozilla/DigiCert_Global_Root_G2.crt" ]; then
-    echo "ERROR: Unable to locate CA certificates Baltimore_CyberTrust_root.crt and DigiCert_Global_Root_G2.crt. DB TLS may not work!"
+  if [ ! -f "/usr/share/ca-certificates/mozilla/Baltimore_CyberTrust_Root.crt" ] ||
+     [ ! -f "/usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G2.crt" ]; then
+    echo "ERROR: Unable to locate CA certificates Baltimore_CyberTrust_Root.crt and DigiCert_Global_Root_G2.crt. DB TLS may not work!"
     echo "  See: https://learn.microsoft.com/en-us/azure/mysql/single-server/concepts-certificate-rotation#create-a-combined-ca-certificate"
   else
-    cat "/usr/share/ca-certificate/mozilla/Baltimore_CyberTrust_root.crt" "/usr/share/ca-certificate/mozilla/DigiCert_Global_Root_G2.crt" > "${DB_CAFILE}"
+    cat "/usr/share/ca-certificates/mozilla/Baltimore_CyberTrust_Root.crt" "/usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G2.crt" > "${DB_CAFILE}"
     echo "Combined cert is located at: ${DB_CAFILE}"
   fi
 
