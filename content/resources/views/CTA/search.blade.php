@@ -122,12 +122,12 @@
 						</div>
 					</div>
 			</div>
-			<footer class="panel-footer">
-						<div class="foot text-center">
-							<button id="submit" type="submit" class="btn btn-primary">{{__("Submit")}}</button>
-							<button onClick="window.location.reload();" type="reset" class="btn btn-default">{{__("Reset")}}</button>
-						</div>
-			</footer>
+			<div class="panel-footer text-center">
+			    <div class="form-group mrgn-bttm-0">
+				<button id="submit" type="submit" class="btn btn-primary">{{__("Submit")}}</button>
+				<button onClick="window.location.reload();" type="reset" class="btn btn-default">{{__("Reset")}}</button>
+			    </div>
+			</div>
 		</form>
         </section>
 	<p>{{__("If you have further questions, please email ")}} <a href="mailto:gcp_bpc@hc-sc.gc.ca">{{__("Health Canada")}}</a></p>
