@@ -143,7 +143,7 @@ class ResultController extends Controller
             $params['activity'] = '';
         }
         if (!isset($params['startDate'])) {
-            $params['endDate'] = '';
+            $params['startDate'] = '';
         }
         if (!isset($params['endDate'])) {
             $params['endDate'] = '';

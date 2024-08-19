@@ -106,7 +106,7 @@ class ResultController extends Controller
             $params['phase'] = '';
         }
         if (!isset($params['startDate'])) {
-            $params['endDate'] = '';
+            $params['startDate'] = '';
         }
         if (!isset($params['rating'])) {
             $params['rating'] = '';

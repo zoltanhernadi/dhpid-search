@@ -97,7 +97,7 @@ class ResultController extends Controller
                         ->where('establishments_activities.activityID', $a->id);
         }
         if (!empty($startDate)) {
-            $inspections->where('inspectionStartDate', '>=', $startDate);
+            $inspections->where('inspections.inspectionStartDate', '>=', $startDate);
             if (!empty($endDate)) {
                 $inspections->where('inspectionEndDate', '<=', $endDate);
             }
@@ -133,7 +133,7 @@ class ResultController extends Controller
             $params['activity'] = '';
         }
         if (!isset($params['startDate'])) {
-            $params['endDate'] = '';
+            $params['startDate'] = '';
         }
         if (!isset($params['endDate'])) {
             $params['endDate'] = '';
