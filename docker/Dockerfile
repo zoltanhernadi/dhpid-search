@@ -8,7 +8,7 @@ LABEL email = 'mmallett@xelerance.com'
 WORKDIR /var/www
 
 RUN apt update
-RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev default-mysql-client
+RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev default-mysql-client ca-certificates
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql mysqli gd opcache zip
 RUN rm -rf /var/lib/apt/lists/*
