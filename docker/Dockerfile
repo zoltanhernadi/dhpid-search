@@ -1,21 +1,21 @@
 # DHPID
-FROM php:8-apache-bullseye
+FROM php:8.4-apache-trixie
 
-LABEL name = 'DHPID Search'
+LABEL name = 'DHPID'
 LABEL maintainer = 'Xelerance - Mike Mallett'
 LABEL email = 'mmallett@xelerance.com'
 
 WORKDIR /var/www
 
 RUN apt update
-RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev default-mysql-client ca-certificates
+RUN DEBIAN_FRONTEND=noninteractive apt install -y git libpng-dev libxml2-dev libzip-dev libbz2-dev libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev default-mysql-client
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql mysqli gd opcache zip
 RUN rm -rf /var/lib/apt/lists/*
 
 # Composer recommended settings
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_VERSION 2.0.12
+ENV COMPOSER_VERSION 2.2.1
 ENV COMPOSER_MEMORY_LIMIT 1024M
 ENV COMPOSER_EXIT_ON_PATCH_FAILURE 1
 
@@ -38,6 +38,7 @@ WORKDIR /var/www/dhpid-search
 RUN composer install --prefer-dist --no-interaction --working-dir=/var/www/dhpid-search
 
 # Setup credentials for database connections
+#COPY /docker/Azure_MySQL_combined_2023.crt /etc/ssl/certs/
 COPY /docker/install.sh /
 RUN chmod +x /install.sh
 
