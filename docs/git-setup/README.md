@@ -133,7 +133,7 @@ git push personal "${BranchName}:refs/heads/main"
 This workflow does not automatically synchronize the personal and development
 branches.
 
-## Short sequence when already on development
+### Short sequence when already on development
 
 After setting the variables and authenticating, with a clean working tree, no
 existing local branch named by `$BranchName`, and a new empty approved personal
@@ -151,3 +151,95 @@ git status
 Skip `remote add` if the matching remote already exists. These raw commands are
 not an idempotent setup script; inspect existing branches and remotes before
 repeating them.
+
+## 8. Sync changes between enterprise and personal
+
+Run these commands from the repository directory, with `$BranchName` set as
+above. Start with `git status` and commit or stash any uncommitted changes.
+Run commands one at a time; stop if any command fails or reports conflicts.
+These steps merge history without rebasing or force-pushing.
+
+### Enterprise development to personal main
+
+First pull enterprise changes into local `development`, then pull personal
+`main` into your personal local branch before merging local `development`:
+
+```powershell
+git status
+git switch development
+git pull --ff-only origin development
+git switch $BranchName
+git pull --no-rebase personal main
+git merge development
+```
+
+Review and test the merged changes before publishing:
+
+```powershell
+git push personal "${BranchName}:refs/heads/main"
+```
+
+This updates local `development` without modifying enterprise `development`.
+The personal pull includes changes made on another machine or on GitHub.
+`--no-rebase` merges those changes without rewriting local commits.
+The final merge includes all commits on local `development`, including any
+local commits not yet published to enterprise. Review them before pushing to
+personal `main`.
+
+### Personal main to enterprise development
+
+Pull personal `main` into your personal local branch, then pull enterprise
+changes into local `development` and merge your personal local branch:
+
+```powershell
+git status
+git switch $BranchName
+git pull --no-rebase personal main
+git switch development
+git pull --ff-only origin development
+git merge $BranchName
+```
+
+This includes any local commits on `$BranchName`, not just commits already
+published to personal `main`. Merge only if all incoming changes belong in
+enterprise `development`.
+
+Review and test the result, then publish if direct pushes are permitted:
+
+```powershell
+git push origin
+```
+
+If enterprise `development` requires a pull request, do not bypass that policy.
+Instead of the direct push, publish the reviewed result to a new enterprise
+review branch and open a pull request targeting `development`:
+
+```powershell
+$ReviewBranch = "YOUR_ENTERPRISE_REVIEW_BRANCH"
+git push origin "development:refs/heads/${ReviewBranch}"
+```
+
+Use a new review branch name to avoid updating someone else's branch.
+These pushes intentionally omit `-u`, preserving the existing upstream settings.
+Only publish code and history permitted on the destination.
+
+### Conflicts and rejected updates
+
+If a merge reports conflicts, resolve the affected files, stage only those
+files with `git add`, and complete the merge:
+
+```powershell
+git merge --continue
+```
+
+To cancel an in-progress merge:
+
+```powershell
+git merge --abort
+```
+
+If `--ff-only` fails, local and remote `development` have diverged. Stop and
+review their histories before reconciling them; do not reset or force-push.
+If a push is rejected because the remote advanced, fetch again, merge the
+updated destination branch, and retest before retrying. Permission or branch
+protection rejections require the appropriate access or pull-request workflow.
