@@ -1,11 +1,24 @@
-# Git setup on Windows
+# Git setup on Windows HC Laptop/Host Machine
 
 Use PowerShell with Git for Windows and Git Credential Manager installed through
 Company Portal. Enterprise and personal GitHub accounts authenticate separately
 because they use different hosts.
 
-Replace all uppercase placeholders before running commands. `sid` is an example
-local branch name; replace it with your preferred name.
+## Set your variables
+
+Replace the uppercase placeholder values below, then run this block once in
+PowerShell. Run the remaining commands in the same PowerShell session so they
+can reuse these variables. These are account names, not passwords or tokens.
+
+```powershell
+$EnterpriseUsername = "YOUR_ENTERPRISE_USERNAME"
+$PersonalUsername = "YOUR_PERSONAL_USERNAME"
+$RepoName = "REPO_NAME"
+$BranchName = "YOUR_BRANCH_NAME"
+```
+
+This guide assumes the enterprise and personal repositories use the same
+repository name.
 
 ## 1. Check Git and authentication support
 
@@ -23,8 +36,8 @@ helper was found in the applicable configuration.
 ## 2. Authenticate both accounts
 
 ```powershell
-git credential-manager github login --url https://github.hc-sc.gc.ca --username YOUR_ENTERPRISE_USERNAME
-git credential-manager github login --url https://github.com --username YOUR_PERSONAL_USERNAME
+git credential-manager github login --url https://github.hc-sc.gc.ca --username $EnterpriseUsername
+git credential-manager github login --url https://github.com --username $PersonalUsername
 ```
 
 Complete each sign-in prompt with the corresponding account. Existing credentials
@@ -41,8 +54,8 @@ If you already have the clone, enter its directory and skip the clone command.
 Do not delete an existing directory to repeat setup.
 
 ```powershell
-git clone https://github.hc-sc.gc.ca/hs/REPO_NAME.git
-Set-Location .\REPO_NAME
+git clone "https://github.hc-sc.gc.ca/hs/${RepoName}.git"
+Set-Location -LiteralPath ".\$RepoName"
 ```
 
 Inspect the existing state before creating branches or remotes:
@@ -71,7 +84,7 @@ Create an empty, private repository on GitHub. Do not initialize it with a READM
 license, or `.gitignore`.
 
 ```powershell
-git remote add personal https://github.com/YOUR_PERSONAL_USERNAME/REPO_NAME.git
+git remote add personal "https://github.com/${PersonalUsername}/${RepoName}.git"
 git fetch personal
 ```
 
@@ -82,17 +95,17 @@ switch branches, change working files, or upload code.
 ## 6. Create the personal local branch and push
 
 ```powershell
-git switch -c YOUR_BRANCH_NAME development
-git push -u personal "YOUR_BRANCH_NAME:refs/heads/main"
+git switch -c $BranchName development
+git push -u personal "${BranchName}:refs/heads/main"
 ```
 
-This creates local `YOUR_BRANCH_NAME` from `development`, creates or updates `main` in the
-personal repository, and sets `YOUR_BRANCH_NAME` to track `personal/main`. It does not push
-`YOUR_BRANCH_NAME` to the enterprise repository.
+This creates the local branch named by `$BranchName` from `development`, creates
+or updates `main` in the personal repository, and sets the local branch to track
+`personal/main`. It does not push the branch to the enterprise repository.
 
-If local `YOUR_BRANCH_NAME` already exists, inspect it and use `git switch YOUR_BRANCH_NAME` instead of
-creating it again. If the remote already contains history, reconcile it before
-pushing. Do not force-push to bypass a rejection.
+If that local branch already exists, inspect it and use `git switch $BranchName`
+instead of creating it again. If the remote already contains history, reconcile
+it before pushing. Do not force-push to bypass a rejection.
 
 ## 7. Verify configuration
 
@@ -106,15 +119,15 @@ Expected tracking:
 
 ```text
 development      -> origin/development
-YOUR_BRANCH_NAME -> personal/main
+<your branch>    -> personal/main
 ```
 
 With Git's usual `push.default=simple`, plain `git push` can fail because the local
-branch `YOUR_BRANCH_NAME` and upstream branch `main` have different names. Use the explicit
-mapping for subsequent personal pushes:
+branch named by `$BranchName` and upstream branch `main` have different names.
+Use the explicit mapping for subsequent personal pushes:
 
 ```powershell
-git push personal "YOUR_BRANCH_NAME:refs/heads/main"
+git push personal "${BranchName}:refs/heads/main"
 ```
 
 This workflow does not automatically synchronize the personal and development
@@ -122,14 +135,15 @@ branches.
 
 ## Short sequence when already on development
 
-After authentication, with a clean working tree, no existing local `YOUR_BRANCH_NAME`, and a
-new empty approved personal repository:
+After setting the variables and authenticating, with a clean working tree, no
+existing local branch named by `$BranchName`, and a new empty approved personal
+repository:
 
 ```powershell
-git remote add personal https://github.com/YOUR_PERSONAL_USERNAME/REPO_NAME.git
+git remote add personal "https://github.com/${PersonalUsername}/${RepoName}.git"
 git fetch personal
-git switch -c YOUR_BRANCH_NAME development
-git push -u personal "YOUR_BRANCH_NAME:refs/heads/main"
+git switch -c $BranchName development
+git push -u personal "${BranchName}:refs/heads/main"
 git branch -vv
 git status
 ```
